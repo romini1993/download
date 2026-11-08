@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unduh Video — TikTok, Instagram, Facebook</title>
+  <meta name="description" content="Unduh video TikTok, Instagram, dan Facebook tanpa watermark langsung dari komputermu.">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#060a11">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Unduh Video">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237c6cff'/%3E%3Cpath d='M32 16v24m0 0l-9-9m9 9l9-9M18 46h28' stroke='white' stroke-width='5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>Unduh Video</h1>
+          <p>TikTok · Instagram · Facebook — langsung tanpa watermark</p>
+        </div>
+      </div>
+      <div class="hero-side">
+        <div class="hero-badges" aria-hidden="true">
+          <span class="badge" data-platform="tiktok">TikTok</span>
+          <span class="badge" data-platform="instagram">Instagram</span>
+          <span class="badge" data-platform="facebook">Facebook</span>
+        </div>
+        <button id="installBtn" class="btn install hidden" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="7" y="2.5" width="10" height="19" rx="2.5"/>
+            <path d="M12 18h.01"/>
+          </svg>
+          Install app
+        </button>
+      </div>
+    </header>
+
+    <section class="card input-card">
+      <label class="label" for="url">Link video</label>
+      <div class="url-row">
+        <input id="url" type="url" inputmode="url" autocomplete="off" spellcheck="false"
+               placeholder="Tempel link di sini, mis. https://www.tiktok.com/@akun/video/...">
+        <button id="pasteBtn" class="btn ghost" type="button">Tempel</button>
+        <button id="checkBtn" class="btn primary" type="button">Cek link</button>
+      </div>
+      <p id="hint" class="hint">Tempel link postingan video, lalu tekan <b>Cek link</b>.</p>
+
+      <div id="errorBox" class="alert hidden" role="alert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5h.01"/>
+        </svg>
+        <span id="errorText"></span>
+      </div>
+
+      <details class="advanced">
+        <summary>
+          <span>Opsi lanjutan</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </summary>
+        <div class="options">
+          <div class="field">
+            <label for="format">Format</label>
+            <select id="format">
+              <option value="video">Video (MP4)</option>
+              <option value="audio">Audio saja (MP3)</option>
+            </select>
+          </div>
+          <div class="field" id="qualityField">
+            <label for="quality">Kualitas</label>
+            <select id="quality">
+              <option value="best">Terbaik</option>
+              <option value="1080">1080p</option>
+              <option value="720">720p</option>
+              <option value="480">480p</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cookies">Cookies browser</label>
+            <select id="cookies">
+              <option value="">Tidak perlu (konten publik)</option>
+              <option value="chrome">Chrome</option>
+              <option value="edge">Edge</option>
+              <option value="firefox">Firefox</option>
+              <option value="brave">Brave</option>
+              <option value="opera">Opera</option>
+              <option value="vivaldi">Vivaldi</option>
+            </select>
+            <small>Untuk video privat atau yang meminta login. Tutup browser dulu sebelum mengunduh.</small>
+          </div>
+          <div class="field">
+            <label for="token">Kode akses</label>
+            <input id="token" type="password" autocomplete="off" spellcheck="false" placeholder="Kosongkan jika tidak dipakai">
+            <small>Hanya jika server memakai ACCESS_TOKEN.</small>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <section id="previewCard" class="card preview hidden">
+      <div class="thumb-wrap">
+        <img id="thumb" alt="Pratinjau video">
+        <div id="thumbFallback" class="thumb-fallback hidden">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="16" rx="3"/><path d="M10 9l5 3-5 3V9z"/>
+          </svg>
+        </div>
+        <span id="platformPill" class="pill"></span>
+        <span id="durationPill" class="pill time hidden"></span>
+      </div>
+      <div class="preview-body">
+        <h2 id="videoTitle"></h2>
+        <p id="videoMeta" class="meta"></p>
+        <p id="carouselNote" class="note hidden"></p>
+        <button id="downloadBtn" class="btn primary big" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16"/>
+          </svg>
+          <span id="downloadBtnText">Unduh sekarang</span>
+        </button>
+      </div>
+    </section>
+
+    <section id="progressCard" class="card progress-card hidden" aria-live="polite">
+      <div class="progress-head">
+        <span id="stageText">Menyiapkan...</span>
+        <span id="percentText">0%</span>
+      </div>
+      <div id="bar" class="bar"><div id="barFill" class="bar-fill"></div></div>
+      <p id="progressMeta" class="meta"></p>
+    </section>
+
+    <section id="resultCard" class="card result hidden" aria-live="polite">
+      <div class="result-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 13l4.5 4.5L19 7"/>
+        </svg>
+      </div>
+      <div class="result-body">
+        <h2>Video siap!</h2>
+        <p id="resultName" class="meta"></p>
+        <div class="result-actions">
+          <a id="saveLink" class="btn primary" href="#" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16"/>
+            </svg>
+            Simpan file
+          </a>
+          <button id="openFolderBtn" class="btn ghost" type="button">Buka folder</button>
+          <button id="newBtn" class="btn ghost" type="button">Unduh lagi</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card history-card">
+      <div class="history-head">
+        <h2>File terunduh</h2>
+        <button id="refreshFiles" class="icon-btn" type="button" title="Muat ulang daftar file" aria-label="Muat ulang daftar file">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 11a8 8 0 10-2.3 5.7M20 5v6h-6"/>
+          </svg>
+        </button>
+      </div>
+      <ul id="fileList" class="file-list"></ul>
+      <p id="emptyFiles" class="empty">Belum ada file. Video yang kamu unduh akan muncul di sini.</p>
+    </section>
+
+    <footer class="footer">
+      <p>Semua proses berjalan di server aplikasi, tanpa situs perantara. Gunakan untuk konten milikmu sendiri atau yang kamu punya izinnya. Hormati hak cipta dan ketentuan tiap platform.</p>
+      <p id="installHint" class="install-hint">Install ke HP: di Chrome ketuk menu ⋮ → <b>Install app</b>; di iPhone buka lewat Safari → Share → <b>Add to Home Screen</b>.</p>
+    </footer>
+  </main>
+
+  <div id="toast" class="toast hidden" role="status"></div>
+  <script src="/app.js" defer></script>
+</body>
+</html>
