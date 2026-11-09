@@ -1,5 +1,0 @@
-flask>=3.0
-yt-dlp>=2024.12.13
-imageio-ffmpeg>=0.5.1
-curl-cffi>=0.7.4
-waitress>=3.0
